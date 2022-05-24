@@ -1,3 +1,5 @@
+// GamePlay - класс, отвечающий за взаимодействие с HTML-страницей
+
 import { calcHealthLevel, calcTileType } from './utils';
 
 export default class GamePlay {

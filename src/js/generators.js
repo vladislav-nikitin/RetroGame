@@ -1,4 +1,5 @@
 import Team from './Team';
+import PositionedCharacter from './PositionedCharacter';
 
 /**
  * Generates random characters
@@ -12,15 +13,15 @@ export function* characterGenerator(allowedTypes, maxLevel) {
 
   const type = Math.floor(Math.random() * allowedTypes.length);
   const level = Math.ceil(Math.random() * maxLevel);
-  yield new allowedTypes[type](level);
+  return new allowedTypes[type](level);
 }
 
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
-  // создание команды из персонажей
+  // создание команды
 
-  const team = new Team();
+  const teamCharacters = new Team();
   for (let i = 0; i < characterCount; i += 1) {
-    team.add(characterGenerator(allowedTypes, maxLevel));
+    teamCharacters.add(characterGenerator(allowedTypes, maxLevel));
   }
-  return team;
+  return teamCharacters;
 }

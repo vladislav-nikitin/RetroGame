@@ -1,9 +1,13 @@
+// Character, привязанный к координате на поле
+
 import Character from './Character';
 
 export default class PositionedCharacter {
   constructor(character, position) {
     if (!(character instanceof Character)) {
-      throw new Error('character must be instance of Character or its children');
+      throw new Error(
+        'character must be instance of Character or its children',
+      );
     }
 
     if (typeof position !== 'number') {

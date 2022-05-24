@@ -1,41 +1,51 @@
+/* eslint-disable */
+import PositionedCharacter from "./PositionedCharacter";
+import Bowman from "./Characters.js/Bowman";
+import Daemon from "./Characters.js/Daemon";
+import Magician from "./Characters.js/Magician";
+import Swordsman from "./Characters.js/Swordsman";
+import Undead from "./Characters.js/Undead";
+import Vampire from "./Characters.js/Vampire";
+
+// изменение отрисовки границ поля
+
 export function calcTileType(index, boardSize) {
-  // TODO: write logic here
   if (index === 0) {
-    return 'top-left';
+    return "top-left";
   }
   if (index === boardSize - 1) {
-    return 'top-right';
+    return "top-right";
   }
   if (index === boardSize ** 2 - boardSize) {
-    return 'bottom-left';
+    return "bottom-left";
   }
   if (index === boardSize ** 2 - 1) {
-    return 'bottom-right';
+    return "bottom-right";
   }
   if (index > 0 && index < boardSize - 1) {
-    return 'top';
+    return "top";
   }
   if (index > boardSize ** 2 - boardSize && index < boardSize ** 2) {
-    return 'bottom';
+    return "bottom";
   }
   if (index % boardSize === 0) {
-    return 'left';
+    return "left";
   }
   if ((index + 1) % boardSize === 0) {
-    return 'right';
+    return "right";
   }
 
-  return 'center';
+  return "center";
 }
 
 export function calcHealthLevel(health) {
   if (health < 15) {
-    return 'critical';
+    return "critical";
   }
 
   if (health < 50) {
-    return 'normal';
+    return "normal";
   }
 
-  return 'high';
+  return "high";
 }
