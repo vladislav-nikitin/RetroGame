@@ -2,14 +2,12 @@
 // наследоваться и реализовывать специализированных персонажей
 
 export default class Character {
-  constructor(level, type = 'generic') {
-    if (new.target.name === 'Character') {
-      throw new Error('Нельзя создать экземпляр класса Character');
+  constructor(level, type = "generic") {
+    if (new.target.name === "Character") {
+      throw new Error("Нельзя создать экземпляр класса Character");
     }
     this.level = level;
     this.type = type;
-    this.attack = 0;
-    this.defence = 0;
     this.health = 100;
   }
 
@@ -25,11 +23,11 @@ export default class Character {
 
     // Повышение показателей атаки/защиты
     this.attack = Math.round(
-      Math.max(this.attack, (this.attack * (180 - this.health)) / 100),
+      Math.max(this.attack, (this.attack * (180 - this.health)) / 100)
     );
 
     this.defence = Math.round(
-      Math.max(this.defence, (this.defence * (180 - this.health)) / 100),
+      Math.max(this.defence, (this.defence * (180 - this.health)) / 100)
     );
   }
 }

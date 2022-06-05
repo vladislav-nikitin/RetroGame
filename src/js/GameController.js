@@ -4,14 +4,20 @@ import Team from "./Team";
 import themes from "./themes";
 import cursors from "./cursors";
 import PositionedCharacter from "./PositionedCharacter";
-import Bowman from "./Characters.js/Bowman";
-import Daemon from "./Characters.js/Daemon";
-import Magician from "./Characters.js/Magician";
-import Swordsman from "./Characters.js/Swordsman";
-import Undead from "./Characters.js/Undead";
-import Vampire from "./Characters.js/Vampire";
+import Bowman from "./Heroes.js/Bowman";
+import Daemon from "./Heroes.js/Daemon";
+import Magician from "./Heroes.js/Magician";
+import Swordsman from "./Heroes.js/Swordsman";
+import Undead from "./Heroes.js/Undead";
+import Vampire from "./Heroes.js/Vampire";
 
 import { generateTeam, characterGenerator } from "./generators";
+
+// ЗАДАЧИ ПОШАГОВО:
+// 1) нужно отрисовать поле - в методе init необходимо вызвать метод drawUi
+// 2) подредактировать границы поля - utils.js
+// 3) нужно создать команду персонажей - characterGenerator и функция generateTeam
+// 4) нужно эти команды расставить по полю - функция generateTeamsPosition
 
 export default class GameController {
   constructor(gamePlay, stateService) {
@@ -32,11 +38,12 @@ export default class GameController {
     // (а не прописывать каждый раз строки руками).
     // Пока не понятно
 
-
     // события мыши
+    /* eslint-disable */
     this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this)); // Вход указателя мыши в ячейку поля
     this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this)); // Выход указателя мыши из ячейки поля
     this.gamePlay.addCellClickListener(this.onCellClick.bind(this)); // Клик мышью по ячейке поля
+    /* eslint-enable */
     // Новая игра
     this.gamePlay.addNewGameListener(this.onNewGameClick.bind(this));
     // Сохранение
@@ -45,27 +52,19 @@ export default class GameController {
     this.gamePlay.addLoadGameListener(this.onLoadGameClick.bind(this));
 
     // генерация команд игрока и компьютера
-    const humanTeam = generateTeam(
-      new Team().humanTypes,
-      1,
-      this.gamePlay.boardSize
-    );
-    const computerTeam = generateTeam(
-      new Team().computerTypes,
-      1,
-      this.gamePlay.boardSize
-    );
-    this.generateTeamsPosition(this.humanTeam, this.computerTeam);
+    const humanTeam = generateTeam(new Team().humanTypes, 1, 2);
+    const computerTeam = generateTeam(new Team().computerTypes, 1, 2);
+    this.generateTeamsPosition(humanTeam, computerTeam);
   }
 
   // генерация позиций игроков
   generateTeamsPosition(team1, team2) {
-    this.humanPositions = getPositions(
+    this.humanPositions = this.getPositions(
       team1.length,
       "human",
       this.gamePlay.boardSize
     );
-    this.computerPositions = getPositions(
+    this.computerPositions = this.getPositions(
       team2.length,
       "computer",
       this.gamePlay.boardSize
@@ -73,19 +72,19 @@ export default class GameController {
   }
 
   // массив со стартовыми позициями игроков
-  getPositions(characterCount, player, this.gamePlay.boardSize) {
+  getPositions(characterCount, player, boardSize = 8) {
     const positionsPlayers = [];
     const possiblePositions = [];
-    for (let i = 0; i < this.gamePlay.boardSize * 2; i += this.gamePlay.boardSize) {
+    for (let i = 0; i < boardSize ** 2; i += boardSize) {
       if (player === "human") {
         possiblePositions.push(i, i + 1);
       }
       if (player === "computer") {
-        possiblePositions.push(i + this.gamePlay.boardSize - 2, i + this.gamePlay.boardSize - 1);
+        possiblePositions.push(i + boardSize - 2, i + boardSize - 1);
       }
     }
 
-    let possibleCountPositions = this.gamePlay.boardSize * 2;
+    let possibleCountPositions = boardSize * 2;
     for (let i = 0; i < characterCount; i += 1) {
       const position = Math.floor(Math.random() * possibleCountPositions);
       positionsPlayers.push(possiblePositions[position]);
@@ -105,6 +104,7 @@ export default class GameController {
       this.gamePlay.showCellTooltip(message, index);
     }
   }
+
   onCellLeave(index) {
     // скрываем подсказку
 
@@ -112,7 +112,6 @@ export default class GameController {
   }
 
   onCellClick(index) {
-
     // Выделяем одного из персонажей
     let currentChar = this.players.find((char) => char.position === index);
 
@@ -132,9 +131,9 @@ export default class GameController {
       this.gamePlay.redrawPositions(this.players);
 
       if (this.currentTurn === "player") this.currentTurn = "computer";
-        else {
-      this.currentTurn === "player";
-    }
+      else {
+        this.currentTurn === "player";
+      }
     }
   }
 }

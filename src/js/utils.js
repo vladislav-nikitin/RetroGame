@@ -1,11 +1,11 @@
 /* eslint-disable */
 import PositionedCharacter from "./PositionedCharacter";
-import Bowman from "./Characters.js/Bowman";
-import Daemon from "./Characters.js/Daemon";
-import Magician from "./Characters.js/Magician";
-import Swordsman from "./Characters.js/Swordsman";
-import Undead from "./Characters.js/Undead";
-import Vampire from "./Characters.js/Vampire";
+import Bowman from "./Heroes.js/Bowman";
+import Daemon from "./Heroes.js/Daemon";
+import Magician from "./Heroes.js/Magician";
+import Swordsman from "./Heroes.js/Swordsman";
+import Undead from "./Heroes.js/Undead";
+import Vampire from "./Heroes.js/Vampire";
 
 // изменение отрисовки границ поля
 
